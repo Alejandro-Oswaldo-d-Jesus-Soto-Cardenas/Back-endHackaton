@@ -18,14 +18,14 @@ public class OpenApiConfig implements WebMvcConfigurer {
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("springboot-public")
-                .pathsToMatch("/v1/api/**")
+                .pathsToMatch("/api/**") // incluir todos los endpoints bajo /api/
                 .build();
     }
 
     @Bean
-    public OpenAPI apiInfo(@Value("${server.url}") String serverUrl) {
+    public OpenAPI apiInfo(@Value("${server.url:http://localhost:8088}") String serverUrl) {
         return new OpenAPI()
-            .addServersItem(new Server().url(serverUrl))  // Utiliza la URL definida en application.yml
+            .addServersItem(new Server().url(serverUrl))
             .info(new Info()
                     .title("REST API with SQL Server Database")
                     .description("REST API with SQL Server Database")
@@ -37,7 +37,7 @@ public class OpenApiConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")  // Tu dominio
+                .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*");
     }
