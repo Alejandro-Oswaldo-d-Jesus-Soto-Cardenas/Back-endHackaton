@@ -1,0 +1,40 @@
+server:
+  port: 8088  # <--- Aquí forzamos el puerto 8088
+
+spring:
+  datasource:
+    # URL de conexión con las credenciales estáticas de SQL Server
+    url: jdbc:sqlserver://98.93.4.231:1433;databaseName=ValleReg;encrypt=false;trustServerCertificate=true
+    username: sa
+    password: VINUM25-07
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    # Dialecto SQL Server
+    database-platform: org.hibernate.dialect.SQLServerDialect
+    show-sql: true # Muestra las consultas SQL en consola
+    
+    hibernate:
+      ddl-auto: none # Configuración de seguridad: No crear ni modificar la BD
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    
+    properties:
+      hibernate:
+        format_sql: true # Formatea las consultas SQL
+        boot:
+          allow_jdbc_metadata_access: false
+        temp:
+          use_jdbc_metadata_defaults: false
+
+  jackson:
+    serialization:
+      indent-output: true # Formatea el JSON de salida de tus APIs
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
