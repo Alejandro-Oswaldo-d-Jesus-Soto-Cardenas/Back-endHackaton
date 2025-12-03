@@ -1,56 +1,60 @@
+// src/main/java/pe/edu/vallegrande/demo/Model/Corresponsal.java
 package pe.edu.vallegrande.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "corresponsal")
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Corresponsal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank @Size(max = 200)
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 200, nullable = false)
     private String name;
 
-    @NotBlank @Size(max = 150)
-    @Column(name = "surnames", nullable = false)
+    @Column(name = "surnames", length = 150, nullable = false)
     private String surnames;
 
-    @NotBlank @Size(max = 30)
-    @Column(name = "id_doc", unique = true, nullable = false)
+    @Column(name = "id_doc", length = 30, nullable = false, unique = true)
     private String idDoc;
 
-    @NotBlank @Size(max = 100)
-    @Column(name = "country", nullable = false)
+    @Column(length = 100, nullable = false)
     private String country;
 
-    @NotBlank @Size(max = 100)
-    @Column(name = "department", nullable = false)
+    @Column(length = 100, nullable = false)
     private String department;
 
-    @NotBlank @Size(max = 100)
-    @Column(name = "province", nullable = false)
+    @Column(length = 100, nullable = false)
     private String province;
 
-    @NotBlank @Size(max = 100)
-    @Column(name = "district", nullable = false)
+    @Column(length = 100, nullable = false)
     private String district;
 
-    @NotBlank @Size(max = 150)
-    @Column(name = "locality", nullable = false)
+    @Column(length = 150, nullable = false)
     private String locality;
 
-    @Builder.Default
     @Column(nullable = false)
+    @Builder.Default
     private Boolean status = true;
 
-    @Builder.Default
-    @Column(name = "register_day", nullable = false)
+    @Column(name = "register_day", nullable = false, updatable = false)
     private LocalDateTime registerDay = LocalDateTime.now();
+
+    // RELACIÓN CON NOTICIAS - CON @JsonIgnore PARA EVITAR LOOP
+    @OneToMany(mappedBy = "corresponsal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"corresponsal"})  // Esto también ayuda
+    private List<Noticia> noticias = new ArrayList<>();
 }

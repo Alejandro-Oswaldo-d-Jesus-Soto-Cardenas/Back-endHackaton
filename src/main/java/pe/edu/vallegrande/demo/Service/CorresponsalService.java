@@ -1,15 +1,16 @@
+// src/main/java/pe/edu/vallegrande/demo/service/CorresponsalService.java
 package pe.edu.vallegrande.demo.Service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pe.edu.vallegrande.demo.Model.Corresponsal;
 import pe.edu.vallegrande.demo.Repository.CorresponsalRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,44 +19,45 @@ public class CorresponsalService {
 
     private final CorresponsalRepository repository;
 
-    public List<Corresponsal> findAll() {
-        return repository.findAll();
+    public Page<Corresponsal> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
-    public List<Corresponsal> findActive() {
-        return repository.findByStatusTrue();
-    }
-
-    public Optional<Corresponsal> findById(Long id) {
-        return repository.findById(id);
-    }
-
-    public Optional<Corresponsal> findByIdDoc(String idDoc) {
-        return repository.findByIdDoc(idDoc);
+    public Page<Corresponsal> findActive(Pageable pageable) {
+        return repository.findByStatusTrue(pageable);
     }
 
     public List<Corresponsal> findBySurnames(String surnames) {
         return repository.findBySurnamesContainingIgnoreCase(surnames);
     }
 
-    public List<Corresponsal> findByRegisterRange(LocalDateTime start, LocalDateTime end) {
+    public List<Corresponsal> findByDateRange(LocalDateTime start, LocalDateTime end) {
         return repository.findByRegisterDayBetween(start, end);
     }
 
-    public Corresponsal create(Corresponsal nuevo) {
-        if (repository.existsByIdDoc(nuevo.getIdDoc())) {
-            throw new IllegalArgumentException("Ya existe un corresponsal con ese id_doc");
+    public Corresponsal findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Corresponsal no encontrado: " + id));
+    }
+
+    public Corresponsal create(Corresponsal c) {
+        if (repository.existsByIdDoc(c.getIdDoc())) {
+            throw new RuntimeException("Ya existe un corresponsal con documento: " + c.getIdDoc());
         }
-        return repository.save(nuevo);
+        return repository.save(c);
     }
 
     public Corresponsal update(Long id, Corresponsal cambios) {
-        Corresponsal existente = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Corresponsal no encontrado: " + id));
+        Corresponsal existente = findById(id);
 
-        existente.setIdDoc(cambios.getIdDoc());
-        existente.setSurnames(cambios.getSurnames());
+        if (!existente.getIdDoc().equals(cambios.getIdDoc()) && 
+            repository.existsByIdDoc(cambios.getIdDoc())) {
+            throw new RuntimeException("El documento ya está registrado");
+        }
+
         existente.setName(cambios.getName());
+        existente.setSurnames(cambios.getSurnames());
+        existente.setIdDoc(cambios.getIdDoc());
         existente.setCountry(cambios.getCountry());
         existente.setDepartment(cambios.getDepartment());
         existente.setProvince(cambios.getProvince());
@@ -66,17 +68,20 @@ public class CorresponsalService {
         return repository.save(existente);
     }
 
-    public void deleteLogical(Long id) {
-        Corresponsal c = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Corresponsal no encontrado: " + id));
+    public void desactivar(Long id) {
+        Corresponsal c = findById(id);
         c.setStatus(false);
         repository.save(c);
     }
 
-    public Corresponsal activate(Long id) {
-        Corresponsal c = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Corresponsal no encontrado: " + id));
+    public Corresponsal activar(Long id) {
+        Corresponsal c = findById(id);
         c.setStatus(true);
         return repository.save(c);
+    }
+
+    public Page<Corresponsal> search(String surnames, String idDoc, Boolean status,
+                                     LocalDateTime from, LocalDateTime to, Pageable pageable) {
+        return repository.search(surnames, idDoc, status, from, to, pageable);
     }
 }
