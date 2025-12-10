@@ -1,5 +1,5 @@
 // src/main/java/pe/edu/vallegrande/demo/rest/UbigeoRest.java
-package pe.edu.vallegrande.demo.rest;
+package vg.Alejandro.SotoCardenas.Hackaton.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,8 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.vallegrande.demo.Model.Ubigeo;
-import pe.edu.vallegrande.demo.Service.UbigeoService;
+
+import vg.Alejandro.SotoCardenas.Hackaton.Model.Ubigeo;
+import vg.Alejandro.SotoCardenas.Hackaton.Service.UbigeoService;
 
 import java.util.HashMap;
 import java.util.Map;

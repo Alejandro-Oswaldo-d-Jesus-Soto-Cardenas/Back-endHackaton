@@ -1,10 +1,11 @@
 // src/main/java/pe/edu/vallegrande/demo/Repository/UbigeoRepository.java
-package pe.edu.vallegrande.demo.Repository;
+package vg.Alejandro.SotoCardenas.Hackaton.Repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import pe.edu.vallegrande.demo.Model.Ubigeo;
+
+import vg.Alejandro.SotoCardenas.Hackaton.Model.Ubigeo;
 
 import java.util.List;
 

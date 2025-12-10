@@ -1,5 +1,5 @@
 // src/main/java/pe/edu/vallegrande/demo/rest/NoticiaRest.java
-package pe.edu.vallegrande.demo.rest;
+package vg.Alejandro.SotoCardenas.Hackaton.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,8 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.vallegrande.demo.Model.Noticia;
-import pe.edu.vallegrande.demo.Service.NoticiaService;
+
+import vg.Alejandro.SotoCardenas.Hackaton.Model.Noticia;
+import vg.Alejandro.SotoCardenas.Hackaton.Service.NoticiaService;
 
 import java.util.HashMap;
 import java.util.Map;

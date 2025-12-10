@@ -1,34 +1,21 @@
 server:
-  port: 8088
-  url: http://localhost:8088
+  port: ${PORT:8088}  # Valor por defecto si PORT no está configurado
+  url: ${SERVER_URL:http://localhost:8088}
 
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=diario_ciudadano;encrypt=false;trustServerCertificate=true
-    username: sa
-    password: VINUM25-07
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-
+    url: ${DB_URL}  ## Cambiar "model" por tu base de datos
+    username: ${DB_USERNAME}  ## Cambiar por tu usuario
+    password: ${DB_PASSWORD}  ## Cambiar por tu contraseña
+    driver-class-name: ${DB_DRIVER}
   jpa:
     database-platform: org.hibernate.dialect.SQLServerDialect
-    show-sql: true
-    
     hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    
-    properties:
-      hibernate:
-        format_sql: true
-        boot:
-          allow_jdbc_metadata_access: false
-        temp:
-          use_jdbc_metadata_defaults: false
-
+      ddl-auto: update  # Puede ser 'create', 'update', 'validate' o 'none'
+    show-sql: false  # Puede true o false, para ver las consultas SQL en consola
   jackson:
     serialization:
-      indent-output: true
+      indent-output: true # Formatea el JSON de salida
 
 springdoc:
   api-docs:
@@ -36,4 +23,4 @@ springdoc:
     path: /api-docs
   swagger-ui:
     enabled: true
-    path: /swagger-ui.html
+    path: /swagger-ui.html # Ruta para acceder a Swagger UI: http://localhost:8088/swagger-ui.html

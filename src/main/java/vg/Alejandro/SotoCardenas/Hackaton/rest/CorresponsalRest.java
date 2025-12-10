@@ -1,5 +1,5 @@
 // src/main/java/pe/edu/vallegrande/demo/rest/CorresponsalRest.java
-package pe.edu.vallegrande.demo.rest;
+package vg.Alejandro.SotoCardenas.Hackaton.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,12 +15,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.vallegrande.demo.Model.Corresponsal;
-import pe.edu.vallegrande.demo.Service.CorresponsalService;
+
+import vg.Alejandro.SotoCardenas.Hackaton.Model.Corresponsal;
+import vg.Alejandro.SotoCardenas.Hackaton.Service.CorresponsalService;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Value;
 
 @RestController
 @RequestMapping("/api/corresponsales")
@@ -29,6 +33,9 @@ import java.util.Map;
 public class CorresponsalRest {
 
     private final CorresponsalService service;
+
+    @Value("${server.url:http://localhost:8088}")
+    private String serverUrl;
 
     @Operation(summary = "Listar todos los corresponsales con paginación",
                description = "Devuelve una página de corresponsales (activos e inactivos)")
@@ -118,8 +125,15 @@ public class CorresponsalRest {
 
     // Clase auxiliar para que Swagger muestre bien la respuesta paginada
     private Map<String, Object> toPageResponse(Page<Corresponsal> page) {
+        List<Object> items = page.getContent().stream().map(c -> {
+            Map<String, Object> item = new HashMap<>();
+            item.put("data", c);
+            item.put("links", Map.of("self", serverUrl + "/api/corresponsales/" + c.getId()));
+            return item;
+        }).collect(Collectors.toList());
+
         Map<String, Object> response = new HashMap<>();
-        response.put("content", page.getContent());
+        response.put("content", items);
         response.put("page", page.getNumber());
         response.put("size", page.getSize());
         response.put("totalElements", page.getTotalElements());

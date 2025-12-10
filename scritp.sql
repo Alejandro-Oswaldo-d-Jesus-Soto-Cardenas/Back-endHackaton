@@ -1,9 +1,13 @@
-
-USE master
+USE master;
 GO
 
+-- Forzar cierre de TODAS las conexiones abiertas a la BD
+ALTER DATABASE diario_ciudadano 
+SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+GO
 
-DROP DATABASE IF EXISTS diario_ciudadano;
+-- Ahora sí la borra aunque esté en uso
+DROP DATABASE diario_ciudadano;
 GO
 CREATE DATABASE diario_ciudadano;
 GO
@@ -143,6 +147,6 @@ SELECT titulo, contenido, fecha_publicacion FROM noticia;
 SELECT * FROM noticia WHERE status = 1;
 GO
 
-UPDATE noticia SET status = 0 WHERE id_noticia = 1;
+UPDATE noticia SET status = 1 WHERE id_noticia = 1;
 
 

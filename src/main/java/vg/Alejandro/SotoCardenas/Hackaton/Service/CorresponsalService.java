@@ -1,13 +1,14 @@
 // src/main/java/pe/edu/vallegrande/demo/service/CorresponsalService.java
-package pe.edu.vallegrande.demo.Service;
+package vg.Alejandro.SotoCardenas.Hackaton.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pe.edu.vallegrande.demo.Model.Corresponsal;
-import pe.edu.vallegrande.demo.Repository.CorresponsalRepository;
+
+import vg.Alejandro.SotoCardenas.Hackaton.Model.Corresponsal;
+import vg.Alejandro.SotoCardenas.Hackaton.Repository.CorresponsalRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

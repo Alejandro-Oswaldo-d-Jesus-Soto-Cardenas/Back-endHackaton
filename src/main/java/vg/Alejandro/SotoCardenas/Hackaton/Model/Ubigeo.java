@@ -1,5 +1,5 @@
 // src/main/java/pe/edu/vallegrande/demo/Model/Ubigeo.java
-package pe.edu.vallegrande.demo.Model;
+package vg.Alejandro.SotoCardenas.Hackaton.Model;
 
 import jakarta.persistence.*;
 import lombok.*;

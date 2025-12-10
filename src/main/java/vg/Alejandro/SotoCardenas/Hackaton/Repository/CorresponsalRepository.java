@@ -1,12 +1,13 @@
 // src/main/java/pe/edu/vallegrande/demo/repository/CorresponsalRepository.java
-package pe.edu.vallegrande.demo.Repository;
+package vg.Alejandro.SotoCardenas.Hackaton.Repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import pe.edu.vallegrande.demo.Model.Corresponsal;
+
+import vg.Alejandro.SotoCardenas.Hackaton.Model.Corresponsal;
 
 import java.time.LocalDateTime;
 import java.util.List;

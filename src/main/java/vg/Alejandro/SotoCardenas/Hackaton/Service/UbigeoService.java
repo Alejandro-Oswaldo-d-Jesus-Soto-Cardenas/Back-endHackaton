@@ -1,13 +1,14 @@
 // src/main/java/pe/edu/vallegrande/demo/Service/UbigeoService.java
-package pe.edu.vallegrande.demo.Service;
+package vg.Alejandro.SotoCardenas.Hackaton.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pe.edu.vallegrande.demo.Model.Ubigeo;
-import pe.edu.vallegrande.demo.Repository.UbigeoRepository;
+
+import vg.Alejandro.SotoCardenas.Hackaton.Model.Ubigeo;
+import vg.Alejandro.SotoCardenas.Hackaton.Repository.UbigeoRepository;
 
 import java.util.List;
 

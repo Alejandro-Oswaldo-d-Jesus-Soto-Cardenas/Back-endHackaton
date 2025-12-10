@@ -1,4 +1,4 @@
-package pe.edu.vallegrande.demo.rest;
+package vg.Alejandro.SotoCardenas.Hackaton.rest;
 
 import lombok.Data;
 import java.time.LocalDateTime;

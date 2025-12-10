@@ -1,5 +1,6 @@
-// src/main/java/pe/edu/vallegrande/demo/Model/Noticia.java
-package pe.edu.vallegrande.demo.Model;
+// src/main/java/vg/Alejandro/SotoCardenas/Hackaton/Model/Noticia.java
+
+package vg.Alejandro.SotoCardenas.Hackaton.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -23,10 +24,10 @@ public class Noticia {
     @Column(name = "id_noticia")
     private Long id;
 
-    // SOLUCIÓN: @JsonIgnoreProperties evita el loop infinito
+    // ROMPE BUCLE CON CORRESPONSAL
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_corresponsal", nullable = false)
-    @JsonIgnoreProperties({"noticias", "hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "noticias"})
     private Corresponsal corresponsal;
 
     @Column(nullable = false, length = 300)
@@ -46,8 +47,9 @@ public class Noticia {
     @Builder.Default
     private Boolean status = true;
 
-    // RELACIÓN CON FOTOS
+    // ROMPE BUCLE CON FOTOS
     @OneToMany(mappedBy = "noticia", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("noticia")  // CLAVE
     @Builder.Default
     private List<FotoNoticia> fotos = new ArrayList<>();
 }

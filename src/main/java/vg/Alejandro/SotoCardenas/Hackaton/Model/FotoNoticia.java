@@ -1,6 +1,9 @@
-// src/main/java/pe/edu/vallegrande/demo/Model/FotoNoticia.java
-package pe.edu.vallegrande.demo.Model;
+// src/main/java/vg/Alejandro/SotoCardenas/Hackaton/Model/FotoNoticia.java
 
+package vg.Alejandro.SotoCardenas.Hackaton.Model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,8 +22,10 @@ public class FotoNoticia {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_noticia", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "fotos", "corresponsal"})
     private Noticia noticia;
 
     @Column(name = "ruta_foto", length = 500, nullable = false)
+    @JsonProperty("rutaFoto")  // Acepta el campo del frontend
     private String rutaFoto;
 }
